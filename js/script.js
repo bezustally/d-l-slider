@@ -4,6 +4,7 @@ window.addEventListener('DOMContentLoaded', function () {
       this.isPaused = false;
       this.btnPrev = gallery.querySelector('.gallery__button_prev');
       this.btnNext = gallery.querySelector('.gallery__button_next');
+      this.btnPlayPause = gallery.querySelector('.gallery__button_play');
       this.images = gallery.querySelectorAll('.gallery__photo');
       this.i = 0;
       [this.btnPrev, this.btnNext].forEach((button) => button.addEventListener('click', (e) => this.toggleImages(e)));
@@ -11,22 +12,37 @@ window.addEventListener('DOMContentLoaded', function () {
       this.slider.addEventListener('mouseover', (e) => this.toggleAnimation(e));
       this.slider.addEventListener('mouseout', (e) => this.toggleAnimation(e));
       this.slider.addEventListener('click', (e) => this.toggleImages(e));
+
+      this.btnPlayPause.addEventListener('click', (e) => this.toggleAnimation(e));
+      this.btnPlayPause.style.display = 'none';
     }
     static showingClass = 'gallery__photo_showed';
     static btnNextClass = 'gallery__button_next';
 
     toggleAnimation = function (e) {
-      this.isPaused = !this.isPaused;
+      switch (this.btnPlayPause.value) {
+        case '||':
+          this.btnPlayPause.value = '▶';
+          this.isPaused = true;
+          break;
+        case '▶':
+          this.btnPlayPause.value = '||';
+          this.isPaused = false;
+          break;
+      }
     };
 
     toggleImages = function (e) {
       if (this.isPaused) {
         try {
-          if (e.target.className == 'gallery__photos') this.isPaused = false;
+          if (e.target.className == 'gallery__photos') {
+            this.isPaused = false;
+          }
         } catch {
           return;
         }
       }
+
       let isNext = true;
 
       if (e) {
@@ -64,7 +80,14 @@ window.addEventListener('DOMContentLoaded', function () {
   const gallery2 = document.querySelector('#gallery2');
 
   const slider1 = new Slider(gallery1);
-  const slider2 = new Slider(gallery2);
 
-  setInterval(() => slider1.toggleImages(), 3000);
+  class autoPlayingSlider extends Slider {
+    constructor(gallery, interval = 1500) {
+      super(gallery);
+      this.interval = interval;
+      this.btnPlayPause.style.display = 'initial';
+      setInterval(() => this.toggleImages(), this.interval);
+    }
+  }
+  const slider2 = new autoPlayingSlider(gallery2, 3000);
 });

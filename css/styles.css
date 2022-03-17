@@ -17,8 +17,8 @@ li {
 
 .gallery__photos {
   position: relative;
-  height: 670px;
   cursor: pointer;
+  padding-bottom: 75%;
 }
 
 .gallery__photo {
@@ -37,6 +37,7 @@ li {
   display: flex;
   justify-content: center;
   gap: 10px;
+  padding-top: 20px;
   padding-bottom: 22px;
 }
 
@@ -69,4 +70,18 @@ li {
 .gallery__button_next:hover {
   background: #c3e88d;
   border: 1px solid #c3e88d;
+}
+
+.gallery__button_play {
+  background: #afe7ff;
+  border: 1px solid #afe7ff;
+  color: white;
+  width: 55px;
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+.gallery__button_play:hover {
+  background: #86d7f9;
+  border: 1px solid #86d7f9;
 }
