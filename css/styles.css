@@ -18,6 +18,7 @@ li {
 .gallery__photos {
   position: relative;
   height: 670px;
+  cursor: pointer;
 }
 
 .gallery__photo {
